@@ -1,0 +1,15 @@
+data:
+  raw_path: 'data/raw/mail_data.csv'
+  test_size: 0.2
+  random_state: 42
+  text_column: 'Message'
+  label_column: 'Category'
+
+features:
+  max_features: 3000
+
+
+model:
+  alpha: 0.1
+  save_dir: "model"
+  model_path: "model/spam_classifier.pkl"

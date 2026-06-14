@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Classifier</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 150px;
+            outline: none;
+            transition: border 0.3s;
+            font-family: inherit;
+        }
+
+        textarea:focus {
+            border-color: #4361ee;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #4361ee;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #3451d1;
+        }
+
+        .result {
+            margin-top: 24px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .spam {
+            background: #ffe0e0;
+            color: #d00000;
+            border: 2px solid #d00000;
+        }
+
+        .ham {
+            background: #e0ffe0;
+            color: #007200;
+            border: 2px solid #007200;
+        }
+
+        .error {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #856404;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>🛡️ Spam Classifier</h1>
+
+        <p class="subtitle">
+            Enter any message to check if it's spam or not
+        </p>
+
+        <form method="POST" action="{{ url_for('predict') }}">
+
+            <textarea
+                name="text"
+                placeholder="e.g. Congratulations! You won a FREE prize! Click now..."
+                required>{{ text if text else '' }}</textarea>
+
+            <button type="submit">
+                🔍 Check Message
+            </button>
+
+        </form>
+
+        {% if prediction %}
+
+            {% if prediction == 'spam' %}
+                <div class="result spam">
+                    🚨 SPAM Detected!
+                </div>
+            {% else %}
+                <div class="result ham">
+                    ✅ Looks Safe (Not Spam)
+                </div>
+            {% endif %}
+
+        {% endif %}
+
+        {% if error %}
+            <div class="result error">
+                ⚠️ {{ error }}
+            </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
