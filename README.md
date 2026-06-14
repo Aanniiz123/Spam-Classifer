@@ -1,0 +1,1 @@
+This is the end to end spam classifer Project which uses the navie bayes(bernouli navie bayes) for the clssification
